@@ -39,7 +39,7 @@
             @yield('content')
       <!-- contact -->
       <!--  footer -->
-      @include('footer')
+        @include('footer')
       <!-- end footer -->
       <!-- Javascript files-->
       <script src="js/jquery.min.js"></script>
