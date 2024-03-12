@@ -19,3 +19,11 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [userController::class, 'index']);
+Route::get('/about', [userController::class, 'about']);
+Route::get('/contract', [userController::class, 'contract']);
+Route::get('/hosting', [userController::class, 'hosting']);
+Route::get('/domain', [userController::class, 'domain']);
+Route::get('/login', [userController::class, 'login']);
+
+
+
