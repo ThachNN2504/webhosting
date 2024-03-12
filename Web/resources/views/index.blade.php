@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'HOME')
+@section('title', 'TRANG CHỦ')
 @section('content')
 <div class="full_bg">
          <div class="slider_main">
