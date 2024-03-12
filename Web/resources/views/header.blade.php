@@ -5,7 +5,7 @@
                   <div class="full">
                      <div class="center-desk">
                         <div class="logo">
-                           <a href="index.html"><img src="images/logo.png" alt="#" /></a>
+                           <a href="{{url('/')}}"><img src="images/logo.png" alt="#" /></a>
                         </div>
                      </div>
                   </div>
@@ -18,20 +18,20 @@
                      <div class="collapse navbar-collapse" id="navbarsExample04">
                         <ul class="navbar-nav mr-auto">
                            <li class="nav-item active">
-                              <a class="nav-link" href="{{url('/')}}">Home</a>
+                              <a class="nav-link" href="{{url('/')}}">Trang Chủ</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="about.html">About</a>
+                              <a class="nav-link" href="{{url('about')}}">Giới Thiệu</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="hosting.html">Hosting</a>
+                              <a class="nav-link" href="{{url('hosting')}}">Hosting</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="domain.html">Domain</a>
+                              <a class="nav-link" href="{{url('domain')}}">Domain</a>
                            </li>
                           
                            <li class="nav-item">
-                              <a class="nav-link" href="contact.html">Contact Us</a>
+                              <a class="nav-link" href="{{url('contract')}}">Liên Hệ</a>
                            </li>
                         </ul>
                      </div>
@@ -39,10 +39,10 @@
                </div>
                <div class="col-md-2  d_none">
                   <ul class="email text_align_right">
-                     <li><a href="Javascript:void(0)"> <i class="fa fa-shopping-bag" aria-hidden="true"> <span>0</span></i>
+                     <li><a href="Javascript:void(0)" data-url="{{url('login')}}> <i class="fa fa-shopping-bag" aria-hidden="true"> <span>0</span></i>
                         </a>
                      </li>
-                     <li><a href="Javascript:void(0)">Sign In
+                     <li><a href="Javascript:void(0)">Đăng Nhập
                         </a>
                      </li>
                   </ul>
