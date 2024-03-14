@@ -1,135 +1,287 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server version:               10.4.32-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win64
--- HeidiSQL Version:             12.6.0.6765
--- --------------------------------------------------------
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th3 14, 2024 lúc 04:34 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Cơ sở dữ liệu: `hosting_web`
+--
 
--- Dumping database structure for hosting_web
-CREATE DATABASE IF NOT EXISTS `hosting_web` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `hosting_web`;
+-- --------------------------------------------------------
 
--- Dumping structure for table hosting_web.domain
-CREATE TABLE IF NOT EXISTS `domain` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Cấu trúc bảng cho bảng `domain`
+--
+
+CREATE TABLE `domain` (
+  `ID` int(11) NOT NULL,
   `ID_User` int(11) DEFAULT NULL,
   `domain_Product` varchar(100) NOT NULL,
-  `date_HH` date NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `ID_User` (`ID_User`),
-  CONSTRAINT `domain_ibfk_1` FOREIGN KEY (`ID_User`) REFERENCES `user` (`ID`)
+  `date_HH` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data exporting was unselected.
+-- --------------------------------------------------------
 
--- Dumping structure for table hosting_web.history
-CREATE TABLE IF NOT EXISTS `history` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Cấu trúc bảng cho bảng `history`
+--
+
+CREATE TABLE `history` (
+  `ID` int(11) NOT NULL,
   `date_History` timestamp NOT NULL DEFAULT current_timestamp(),
   `type_History` enum('user_activity','error','system_message') NOT NULL,
-  `detail_History` text DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+  `detail_History` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data exporting was unselected.
+-- --------------------------------------------------------
 
--- Dumping structure for table hosting_web.hosting
-CREATE TABLE IF NOT EXISTS `hosting` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Cấu trúc bảng cho bảng `hosting`
+--
+
+CREATE TABLE `hosting` (
+  `ID` int(11) NOT NULL,
   `name_Hosting` varchar(100) NOT NULL,
   `mo_ta` text DEFAULT NULL,
   `GiaTien` decimal(10,2) NOT NULL,
   `data_Hosting` int(11) NOT NULL,
-  `bandwidth` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
+  `bandwidth` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data exporting was unselected.
+-- --------------------------------------------------------
 
--- Dumping structure for table hosting_web.orders
-CREATE TABLE IF NOT EXISTS `orders` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Cấu trúc bảng cho bảng `orders`
+--
+
+CREATE TABLE `orders` (
+  `ID` int(11) NOT NULL,
   `ID_User` int(11) DEFAULT NULL,
   `ID_Name_Hosting` int(11) DEFAULT NULL,
   `ID_Domain` int(11) DEFAULT NULL,
   `date_Order` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` enum('pending','completed','cancelled') DEFAULT 'pending',
-  PRIMARY KEY (`ID`),
-  KEY `ID_User` (`ID_User`),
-  KEY `ID_Name_Hosting` (`ID_Name_Hosting`),
-  KEY `ID_Domain` (`ID_Domain`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`ID_User`) REFERENCES `user` (`ID`),
-  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`ID_Name_Hosting`) REFERENCES `hosting` (`ID`),
-  CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`ID_Domain`) REFERENCES `domain` (`ID`)
+  `status` enum('pending','completed','cancelled') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data exporting was unselected.
+-- --------------------------------------------------------
 
--- Dumping structure for table hosting_web.setup
-CREATE TABLE IF NOT EXISTS `setup` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Cấu trúc bảng cho bảng `setup`
+--
+
+CREATE TABLE `setup` (
+  `ID` int(11) NOT NULL,
   `setup_Name` varchar(100) NOT NULL,
-  `setup_Value` text DEFAULT NULL,
-  PRIMARY KEY (`ID`)
+  `setup_Value` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data exporting was unselected.
+-- --------------------------------------------------------
 
--- Dumping structure for table hosting_web.support
-CREATE TABLE IF NOT EXISTS `support` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Cấu trúc bảng cho bảng `support`
+--
+
+CREATE TABLE `support` (
+  `ID` int(11) NOT NULL,
   `ID_User` int(11) DEFAULT NULL,
   `Title` varchar(100) NOT NULL,
   `mo_ta` text NOT NULL,
   `date_Create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` enum('open','closed') DEFAULT 'open',
-  PRIMARY KEY (`ID`),
-  KEY `ID_User` (`ID_User`),
-  CONSTRAINT `support_ibfk_1` FOREIGN KEY (`ID_User`) REFERENCES `user` (`ID`)
+  `status` enum('open','closed') DEFAULT 'open'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data exporting was unselected.
+-- --------------------------------------------------------
 
--- Dumping structure for table hosting_web.transaction
-CREATE TABLE IF NOT EXISTS `transaction` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Cấu trúc bảng cho bảng `transaction`
+--
+
+CREATE TABLE `transaction` (
+  `ID` int(11) NOT NULL,
   `ID_DonHang` int(11) DEFAULT NULL,
   `SoTien` decimal(10,2) NOT NULL,
   `PhuongThucThanhToan` varchar(50) NOT NULL,
   `NgayGiaoDich` timestamp NOT NULL DEFAULT current_timestamp(),
-  `TrangThai` enum('success','pending','failed') DEFAULT 'pending',
-  PRIMARY KEY (`ID`),
-  KEY `ID_DonHang` (`ID_DonHang`),
-  CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`ID_DonHang`) REFERENCES `orders` (`ID`)
+  `TrangThai` enum('success','pending','failed') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data exporting was unselected.
+-- --------------------------------------------------------
 
--- Dumping structure for table hosting_web.user
-CREATE TABLE IF NOT EXISTS `user` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Cấu trúc bảng cho bảng `user`
+--
+
+CREATE TABLE `user` (
+  `ID` int(11) NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `Email` varchar(100) NOT NULL,
   `Password` varchar(100) NOT NULL,
   `bill_info` varchar(255) DEFAULT NULL,
-  `is_admin` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`ID`)
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data exporting was unselected.
+--
+-- Đang đổ dữ liệu cho bảng `user`
+--
 
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+INSERT INTO `user` (`ID`, `user_name`, `Email`, `Password`, `bill_info`, `is_admin`) VALUES
+(1, 'admin', 'c9smoothie1995@gmail.com', '0826010715', NULL, 1);
+
+--
+-- Chỉ mục cho các bảng đã đổ
+--
+
+--
+-- Chỉ mục cho bảng `domain`
+--
+ALTER TABLE `domain`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID_User` (`ID_User`);
+
+--
+-- Chỉ mục cho bảng `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Chỉ mục cho bảng `hosting`
+--
+ALTER TABLE `hosting`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Chỉ mục cho bảng `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID_User` (`ID_User`),
+  ADD KEY `ID_Name_Hosting` (`ID_Name_Hosting`),
+  ADD KEY `ID_Domain` (`ID_Domain`);
+
+--
+-- Chỉ mục cho bảng `setup`
+--
+ALTER TABLE `setup`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Chỉ mục cho bảng `support`
+--
+ALTER TABLE `support`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID_User` (`ID_User`);
+
+--
+-- Chỉ mục cho bảng `transaction`
+--
+ALTER TABLE `transaction`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID_DonHang` (`ID_DonHang`);
+
+--
+-- Chỉ mục cho bảng `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `domain`
+--
+ALTER TABLE `domain`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `history`
+--
+ALTER TABLE `history`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `hosting`
+--
+ALTER TABLE `hosting`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `setup`
+--
+ALTER TABLE `setup`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `support`
+--
+ALTER TABLE `support`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `transaction`
+--
+ALTER TABLE `transaction`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `user`
+--
+ALTER TABLE `user`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Các ràng buộc cho các bảng đã đổ
+--
+
+--
+-- Các ràng buộc cho bảng `domain`
+--
+ALTER TABLE `domain`
+  ADD CONSTRAINT `domain_ibfk_1` FOREIGN KEY (`ID_User`) REFERENCES `user` (`ID`);
+
+--
+-- Các ràng buộc cho bảng `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`ID_User`) REFERENCES `user` (`ID`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`ID_Name_Hosting`) REFERENCES `hosting` (`ID`),
+  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`ID_Domain`) REFERENCES `domain` (`ID`);
+
+--
+-- Các ràng buộc cho bảng `support`
+--
+ALTER TABLE `support`
+  ADD CONSTRAINT `support_ibfk_1` FOREIGN KEY (`ID_User`) REFERENCES `user` (`ID`);
+
+--
+-- Các ràng buộc cho bảng `transaction`
+--
+ALTER TABLE `transaction`
+  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`ID_DonHang`) REFERENCES `orders` (`ID`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
